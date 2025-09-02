@@ -1,48 +1,26 @@
+from collections import defaultdict 
+
 N = int(input())
 
-# 入力した文字列のリスト
-s_list = []
-for _ in range(N):
+# num[s] : 文字列sが何個あるか
+num = defaultdict(int)
 
-    input_str = input()
-    s_list.append(input_str)
+for i in range(N):
+    # 入力の文字列をソートしておく
+    s = "".join(sorted(input()))
 
-# アルファベットの文字の各文字の出現回数のリスト
-alphabet_appear_cnt_list = [0] * 26
+    # インクリメント
+    num[s] += 1
 
-# アルファベットの小文字のリスト
-alphabet_list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', \
-                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', \
-                 'u', 'v', 'w', 'x', 'y', 'z']
+#　集計
+result = 0
 
-all_s_alphabet_apper_cnt_list = []
+for s in num:
 
-for i in range(len(s_list)):
+    # 文字列sがn個ある
+    n = num[s]
 
-    s = s_list[i]
-    for j in range(10):
+    # nc2を足していく
+    result += n * (n - 1) // 2
 
-        for k in range(len(alphabet_list)):
-            
-            if alphabet_list[k] == s[j]:
-                alphabet_appear_cnt_list[k] += 1
-    
-    all_s_alphabet_apper_cnt_list.append(alphabet_appear_cnt_list)
-    alphabet_appear_cnt_list = [0] * 26
-
-
-# アナグラムということは、アルファベットの文字の出現回数が同じ
-corresponding_cnt = 0
-for i in range(len(all_s_alphabet_apper_cnt_list)):
-
-    for j in range(i+1, len(all_s_alphabet_apper_cnt_list)):
-
-        if all_s_alphabet_apper_cnt_list[i] == all_s_alphabet_apper_cnt_list[j]:
-            corresponding_cnt += 1
-    
-
-print(corresponding_cnt)
-
-
-
-
+print(result)
